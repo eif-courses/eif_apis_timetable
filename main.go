@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/patrickmn/go-cache"
+	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"time"
@@ -1111,18 +1112,28 @@ func GetSingleClassroomHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	mux := http.NewServeMux()
+
+	// Create a new CORS handler
+	c := cors.AllowAll() // You can customize CORS settings if needed
+
+	// Wrap your existing handler with the CORS middleware
+	handler := c.Handler(mux)
+
+	// Define your routes
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "index.html")
 	})
-	http.HandleFunc("/api/v1/timetable/teacher", GetSingleTeacherHandler)
-	http.HandleFunc("/api/v1/timetable/group", GetSingleGroupHandler)
-	http.HandleFunc("/api/v1/timetable/classroom", GetSingleClassroomHandler)
-	http.HandleFunc("/api/v1/timetable/teachers", GetAllTeachersIDs)
-	http.HandleFunc("/api/v1/timetable/classrooms", GetAllClassroomsIDs)
-	http.HandleFunc("/api/v1/timetable/groups", GetAllGroupsIDs)
+	mux.HandleFunc("/api/v1/timetable/teacher", GetSingleTeacherHandler)
+	mux.HandleFunc("/api/v1/timetable/group", GetSingleGroupHandler)
+	mux.HandleFunc("/api/v1/timetable/classroom", GetSingleClassroomHandler)
+	mux.HandleFunc("/api/v1/timetable/teachers", GetAllTeachersIDs)
+	mux.HandleFunc("/api/v1/timetable/classrooms", GetAllClassroomsIDs)
+	mux.HandleFunc("/api/v1/timetable/groups", GetAllGroupsIDs)
 
+	// Start the server
 	log.Println("** Service Started on Port 8080 **")
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", handler)
 	if err != nil {
 		log.Fatal(err)
 	}
