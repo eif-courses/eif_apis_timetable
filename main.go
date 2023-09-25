@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/patrickmn/go-cache"
+	"log"
 	"net/http"
 	"time"
 )
@@ -1119,5 +1120,10 @@ func main() {
 	http.HandleFunc("/api/v1/timetable/teachers", GetAllTeachersIDs)
 	http.HandleFunc("/api/v1/timetable/classrooms", GetAllClassroomsIDs)
 	http.HandleFunc("/api/v1/timetable/groups", GetAllGroupsIDs)
-	http.ListenAndServe(":8080", nil) // Change the port as needed
+
+	log.Println("** Service Started on Port 8080 **")
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
