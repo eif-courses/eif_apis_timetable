@@ -1,6 +1,0 @@
-# github.com/patrickmn/go-cache v2.1.0+incompatible
-## explicit
-github.com/patrickmn/go-cache
-# github.com/rs/cors v1.10.0
-## explicit; go 1.13
-github.com/rs/cors
