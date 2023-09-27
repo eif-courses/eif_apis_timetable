@@ -29,6 +29,25 @@ var (
 	cacheKeyGroupIds = "all_group_ids"
 )
 
+// GetAllTeachersIDs Get all teachers IDs
+// @Summary Get all teachers IDs
+// @Description Get all teachers IDs
+// @Tags teachers
+// @Produce json
+// @Success 200 {array} string
+// @Router /teachers [get]
+// @Security ApiKeyAuth
+// @Failure 500 {string} string "Internal server error"
+// @Failure 401 {string} string "Unauthorized"
+// @Failure 400 {string} string "Bad request"
+// @Failure 404 {string} string "Not found"
+// @Failure 403 {string} string "Forbidden"
+// @Failure 503 {string} string "Service unavailable"
+// @Failure 504 {string} string "Gateway timeout"
+// @Failure 502 {string} string "Bad gateway"
+// @Failure 429 {string} string "Too many requests"
+// @Failure 415 {string} string "Unsupported media type"
+// @Failure 406 {string} string "Not acceptable"
 func GetAllTeachersIDs(w http.ResponseWriter, r *http.Request) {
 
 	if cachedResult, found := c.Get(cacheKey); found {
@@ -1111,6 +1130,12 @@ func GetSingleClassroomHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// @title			Swagger Example API
+// @version		1.0
+// @description	This is a sample server Petstore server.
+// @termsOfService	http://swagger.io/terms/
+// @host			localhost:8080
+// @BasePath		/api/v1/timetable
 func main() {
 	mux := http.NewServeMux()
 
