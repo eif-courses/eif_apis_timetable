@@ -34,20 +34,8 @@ var (
 // @Description Get all teachers IDs
 // @Tags teachers
 // @Produce json
-// @Success 200 {array} string
+// @Success 200 {string} string "OK"
 // @Router /teachers [get]
-// @Security ApiKeyAuth
-// @Failure 500 {string} string "Internal server error"
-// @Failure 401 {string} string "Unauthorized"
-// @Failure 400 {string} string "Bad request"
-// @Failure 404 {string} string "Not found"
-// @Failure 403 {string} string "Forbidden"
-// @Failure 503 {string} string "Service unavailable"
-// @Failure 504 {string} string "Gateway timeout"
-// @Failure 502 {string} string "Bad gateway"
-// @Failure 429 {string} string "Too many requests"
-// @Failure 415 {string} string "Unsupported media type"
-// @Failure 406 {string} string "Not acceptable"
 func GetAllTeachersIDs(w http.ResponseWriter, r *http.Request) {
 
 	if cachedResult, found := c.Get(cacheKey); found {
